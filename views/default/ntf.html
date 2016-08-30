@@ -1,0 +1,40 @@
+{{extend 'layout.html'}}
+<div id="page">
+<h2>Notifications</h2>
+<table class="table" id="ntt">
+    {{cnt=0}}
+    {{for j in nans:}}
+    {{if cnt==7:break}}
+    <tr  class="one">
+      <td  rowspan="2">{{if j.type_of==1:}}<a href={{=URL('default','profile_view',args=ids[cnt])}}>{{=IMG(_src=URL('default','download',args=tt[cnt]),_alt="Pic not Available",_height="60px",_weight="60px")}}</a>{{pass}}
+	{{if j.type_of==2:}}<a href={{=URL('default','profile_view',args=ids[cnt])}}>{{=IMG(_src=URL('default','download',args=tt[cnt]),_alt="Pic Not Available",_height="60px",_weight="60px")}}</a>{{pass}}
+	{{if j.type_of==3:}}<a href={{=URL('default','fill_feedback',args=ids[cnt])}}>{{=IMG(_src=URL('static','images',args="feedback.jpg"),_alt="Pic not available",_height="60px",_weight="60px")}}{{pass}}
+	  {{if j.type_of==4:}}<a href={{=URL('default','check_feedback',args=ids[cnt])}}>{{=IMG(_src=URL('static','images',args="check.jpg"),_alt="Pic not Available",_height="60px",_weight="60px")}}{{pass}}
+      </td>      
+
+      <td> {{if j.type_of==1:}}<a onclick="ajax ('{{=URL('default','nvis',args=j.id)}}')" href="{{=URL('default','particularasadmin',args=j.tripid)}}"> {{=name[cnt]}} has sent you a requset to join trip.</a>{{pass}}
+	{{if j.type_of==2:}}<a onclick="ajax('{{=URL('default','nvis',args=j.id)}}')" href="{{=URL('default','particular',args=j.tripid)}}"> {{=name[cnt]}} has accepted your requset to join trip.</a>{{pass}}
+	{{if j.type_of==3:}}<a onclick="ajax('{{=URL('default','nvis',args=j.id)}}')" href="{{=URL('default','view_feedback',args=j.tripid)}}">Please give your valuable feedback about the trip.</a>{{pass}}
+	{{if j.type_of==4:}}View the feedback given about you by {{=name[cnt]}}.{{pass}}
+      </td>
+    </tr>
+    <tr class="two">
+      <td>This notification popped up at {{=j.time_of}} on {{=j.date_of}}.</td>
+    </tr>
+    {{cnt = cnt+1}}
+    {{pass}}
+  </table>
+{{if(pageno!=0):}}
+<a href="{{=URL(args=[pageno-1])}}"><button>prev</button></a>
+{{pass}}
+{{if(len(nans)>7):}}
+<a href="{{=URL(args=[pageno+1])}}"><button>next</button></a>
+{{pass}}
+    </div>
+    <style>
+        #page{
+        margin-top:-40px;
+        margin-left:270px;
+        margin-right:120px;
+    }
+    </style>

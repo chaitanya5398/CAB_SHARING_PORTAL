@@ -1,0 +1,66 @@
+{{extend 'layout.html' }}
+
+<h1>{{=info.first_name + " " + info.last_name}}'s Profile</h1>
+{{if info.votes_no==0:}}
+<h3> {{=info.first_name}} has not yet been rated by anyone who shared a trip with him on Cabshare</h3>
+{{pass}}
+{{if info.votes_no!=0:}}
+<h3> The rating of {{=info.first_name}} given by Cabshare users is {{=info.depend_rate}}/5</h3>{{pass}}
+<h3> {{=info.first_name}} hails from {{if info.City is not None:}}{{=info.City}}{{pass}}{{else:}}a City{{pass}} in {{=info.Country}} and was born on <span>{{=info.dob}}</span>(YEAR-MM-DD)</h3>
+<h3> Gender:{{=info.Gender}}</h3>
+{{=IMG(_id="propic",_src=URL('default','download',args=info.Pp),_alt="No Image Available")}}
+
+<table class="table table-hover" id="rating">
+  <tr>
+    <td>Rating</td>
+    <td>{{if info.depend_rate!=-1:}}{{=info.depend_rate}}/5{{pass}}{{if info.depend_rate==-1:}}Not Rated{{pass}}</td>
+  </tr>
+    <tr>
+    <td>No of votes</td>
+    <td>{{=info.votes_no}}</td>
+  </tr>
+  <tr>
+    <td>No of trips by {{=info.first_name}}</td>
+    <td>{{=info.trips_no}}</td>
+  </tr>
+  </table>
+<h3> Contact {{=info.first_name}}</h3>
+<table id="contacts">
+  <tr>
+    <td>Em@il</td>
+    <td>{{=info.email}}</td>
+  </tr>
+  <tr>
+    <td>Mobile</td>
+    <td>{{=info.phone_no}}</td>
+  </tr>
+</table>
+
+<div id="commentsdiv">
+  {{if ck==0:}}
+  <h4>There have been no comments till date about {{=info.first_name}}</h4>
+  {{pass}}
+  {{if ck!=0:}}
+    <h4>The recent comments about {{=info.first_name}}</h4>
+  <table id="cmnt">
+    {{for j in cms:}}
+    <tr class="cmone">
+      <td> <a href={{=URL('default','profile_view',args=udrid[cnt])}}>{{=IMG(_src=URL('default','download',args=img[cnt]),_alt="No image")}}</a></td>
+      <td>{{=j.comm}}</td>
+    </tr>
+    <tr class="cmtwo">
+      <td>{{=nms[cnt]}}
+      <td>This comment was added on {{=j.time_of}} on {{=j.date_of}}</td>
+    </tr>
+    {{cnt=cnt+1}}
+    {{pass}}
+    {{pass}}
+    </table>
+</div>
+
+<style>
+  #rating{
+  width: 30%;
+  float: right;
+  }
+</style>

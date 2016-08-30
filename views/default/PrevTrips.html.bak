@@ -1,0 +1,85 @@
+{{extend 'layout.html'}}
+<div id="page">
+<h1 style="text-align:center">Previous Trips</h1>
+<h3>As admin</h3>
+{{if len(PrevTripsasadmin)==0:}}
+<h4>No trips as starter</h4>
+{{else:}}
+<table class="table table-hover">
+    <thead>
+<tr>
+    <th style="text-align:center;width:10em;">From</th>
+    <th style="text-align:center;width:10em;">To</th>
+    <th style="text-align:center;width:10em;">Date</th>
+    <th style="text-align:center;width:10em;">Earliest time</th>
+    <th style="text-align:center;width:10em;">Latest time</th>
+    <th style="text-align:center;width:10em;">maximum passengers</th>
+</tr>
+    </thead>
+    <tbody>
+        {{for i,j in enumerate(PrevTripsasadmin):}}
+{{if(i==7):break}}
+<tr>
+    <td style="text-align:center"><a href="{{=URL('particularwithcomm',args=[j.id])}}">{{=j.from_place}}</a></td>
+    <td style="text-align:center">{{=j.to_place}}</td>
+    <td style="text-align:center">{{=j.date_of_trip}}</td>
+    <td style="text-align:center">{{=j.start_up}}</td>
+    <td style="text-align:center">{{=j.start_end}}</td>
+    <td style="text-align:center">{{=j.max_people-int(j.total_tillnow)}}</td>
+</tr>
+{{pass}}
+    </tbody>
+</table>
+{{if(pageno1!=0):}}
+<a href="{{=URL(args=[x-1])}}"><button>prev</button></a>
+{{pass}}
+{{if(len(PrevTripsasadmin)>7):}}
+<a href="{{=URL(args=[x+1])}}"><button>next</button></a>
+{{pass}}
+{{pass}}
+</br></br>
+<h3>As Passenger</h3>
+{{if len(PrevTrips)==0:}}
+<h4>No trips as passenger</h4>
+{{else:}}
+<table class="table table-hover">
+<thead>
+<tr>
+    <th style="text-align:center;width:10em;">Starter</th>
+    <th style="text-align:center;width:10em;">From</th>
+    <th style="text-align:center;width:10em;">To</th>
+    <th style="text-align:center;width:10em;">Date</th>
+    <th style="text-align:center;width:10em;">Earliest time</th>
+    <th style="text-align:center;width:10em;">Latest time</th>
+    <th style="text-align:center;width:10em;">maximum passengers</th>
+</tr>
+    </thead>
+    <tbody>
+{{for i,j in enumerate(PrevTrips):}}
+{{if(i==7):break}}
+<tr>
+    <td style="text-align:center"><a href="{{=URL('particularwithcomm',args=[j.id])}}">{{=j.starter}}</a></td>
+    <td style="text-align:center">{{=j.from_place}}</td>
+    <td style="text-align:center">{{=j.to_place}}</td>
+    <td style="text-align:center">{{=j.date_of_trip}}</td>
+    <td style="text-align:center">{{=j.start_up}}</td>
+    <td style="text-align:center">{{=j.start_end}}</td>
+    <td style="text-align:center">{{=j.max_people-int(j.total_tillnow)}}</td>
+</tr>
+{{pass}}
+    </tbody>
+</table>
+{{if(pageno2!=0):}}
+<a href="{{=URL(args=[x-1])}}"><button>prev</button></a>
+{{pass}}
+{{if(len(PrevTrips)>7):}}
+<a href="{{=URL(args=[x+1])}}"><button>next</button></a>
+{{pass}}{{pass}}</br></br></br>
+</div>
+<style>
+        #page{
+        margin-top:-40px;
+        margin-left:270px;
+        margin-right:120px;
+    }
+    </style>

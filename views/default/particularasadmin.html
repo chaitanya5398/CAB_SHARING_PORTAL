@@ -1,0 +1,102 @@
+{{extend 'layout.html'}}
+<div id="page">
+<h2>Requests</h2>
+{{if trip.max_people>trip.total_tillnow:}}
+<table>
+    <thead>
+        <tr>
+    <th style="text-align:center;width:10em;">Image</th>
+    <th style="text-align:center;width:10em;">FullName</th>
+    <th style="text-align:center;width:10em;">Country</th>
+    <th style="text-align:center;width:10em;">City</th>
+    <th style="text-align:center;width:10em;">No. of trips</th>
+    <th style="text-align:center;width:10em;">Dependability</th>
+    <th style="text-align:center;width:10em;">E-mail</th>
+    <th style="text-align:center;width:10em;">Phone-no</th>
+    <th style="text-align:center;width:10em;">Seats requested</th>
+    <th style="text-align:center;width:10em;">Accept request</th>
+</tr>
+    </thead>
+    <tbody>
+{{for i,j in enumerate(requests):}}
+<tr>
+    <td style="text-align:center;font-size:1.25em"><a href="{{=URL('profile_view',args=[j.id])}}" alt="image unavailable">{{=IMG(_src=URL('default','download',args=j.Pp),_alt="Pic not Available",_height="40px",_weight="40px")}}</a></td>
+    <td style="text-align:center;width:10em;">{{=j.first_name+" "+j.last_name}}</td>
+    <td style="text-align:center;width:10em;">{{=j.Country}}</td>
+    <td style="text-align:center;width:10em;">{{=j.City}}</td>
+    <td style="text-align:center;width:10em;">{{=j.trips_no}}</td>
+    {{if j.depend_rate!=-1:}}
+    <td style="text-align:center;width:10em;">{{=j.depend_rate}}</td>
+    {{else:}}
+    <td style="text-align:center;width:10em;">Not rated yet</td>
+    {{pass}}
+    <td style="text-align:center;width:10em;">{{=j.email}}</td>
+    <td style="text-align:center;width:10em;">{{=j.phone_no}}</td>
+{{for k,l in enumerate(notif):}}
+    {{if l.send_id==j.id:break}}
+    {{pass}}
+    <td style="text-align:center;width:10em;">{{=l.no_of}}</td>
+    <td style="text-align:center;width:10em;"><a href="{{=URL('create_notification',args=[2,trip.id,trip.strid,j.id,j.username,l.no_of])}}">Accept</a></td>
+</tr>
+{{pass}}
+{{else:}}
+<h4>Maximum passengers limit reached.</h4>
+{{pass}}
+    </tbody>
+</table>
+
+</br></br>
+<h2>Passengers</h2>
+<table>
+<tr>
+    <th style="text-align:center;width:10em;">Image</th>
+    <th style="text-align:center;width:10em;">FullName</th>
+    <th style="text-align:center;width:10em;">Country</th>
+    <th style="text-align:center;width:10em;">City</th>
+    <th style="text-align:center;width:10em;">No. of trips</th>
+    <th style="text-align:center;width:10em;">Dependability</th>
+    <th style="text-align:center;width:10em;">E-mail</th>
+    <th style="text-align:center;width:10em;">Phone-no</th>
+</tr>
+{{for i,j in enumerate(accepted):}}
+<tr>
+    <td style="text-align:center;font-size:1.25em"><a href="{{=URL('profile_view',args=[j.id])}}" alt="image unavailable">{{=IMG(_src=URL('default','download',args=j.Pp),_alt="Pic not Available",_height="40px",_weight="40px")}}</a></td>
+    <td style="text-align:center;width:10em;">{{=j.first_name+" "+j.last_name}}</td>
+    <td style="text-align:center;width:10em;">{{=j.Country}}</td>
+    <td style="text-align:center;width:10em;">{{=j.City}}</td>
+    <td style="text-align:center;width:10em;">{{=j.trips_no}}</td>
+    {{if j.depend_rate!=-1:}}
+    <td style="text-align:center;width:10em;">{{=j.depend_rate}}</td>
+    {{else:}}
+    <td style="text-align:center;width:10em;">Not rated yet</td>
+    {{pass}}
+    <td style="text-align:center;width:10em;">{{=j.email}}</td>
+    <td style="text-align:center;width:10em;">{{=j.phone_no}}</td>
+</tr>
+{{pass}}
+</table>
+</br></br>
+<h2>Comments</h2>
+<table>
+    <th style="text-align:center;width:40em;">Comments</th>
+    <th style="text-align:center;width:20em;">comment by</th>
+    <th style="text-align:center;width:10em;">time</th>
+    <th style="text-align:center;width:10em;">date</th>
+    {{for i,j in enumerate(comments):}}
+    <tr>
+            <td style="text-align:center;width:40em;">{{=j.comm}}</td>
+            <td style="text-align:center;width:20em;">{{=j.cmby}}</td>
+            <td style="text-align:center;width:10em;">{{=j.time_cm}}</td>
+            <td style="text-align:center;width:10em;">{{=j.date_cm}}</td>
+    </tr>
+    {{pass}}
+</table>
+</br></br></br>
+</div>
+<style>
+        #page{
+        margin-top:-40px;
+        margin-left:270px;
+        margin-right:120px;
+    }
+    </style>

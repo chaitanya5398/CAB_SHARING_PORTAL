@@ -1,0 +1,87 @@
+{{extend 'layout.html' }}
+
+<div id="Home">
+<h1>Please give your valuable feedback about the trip</h1>
+<h4>Hope you had a nice trip</h4>
+<h4> The trip was started by {{=db.auth_user(db.auth_user.id == main).first_name}} and the trip happened on {{=db.trip(db.trip.id == tid).date_of_trip}}
+  <div id="yesno">
+    {{cnt=0}}
+    {{if db.voting( (db.voting.voterid==auth.user_id) & (db.voting.candid==main) & (db.voting.tripid==tid) ) is None:}}
+    {{if main!=auth.user_id :}}
+    {{cnt=cnt+1}}
+  <p>Feedback about {{=db.auth_user(db.auth_user.id==main).first_name}}</p>
+  <button class="yes" onclick="yes('{{=db.auth_user(db.auth_user.id==main).first_name}}',{{=main}})" id="y{{=cnt}}">YES</button>  <button class="no" onclick="no({{=cnt}},{{=main}},{{=tid}})" id="n{{=cnt}}">NO</button>
+  {{pass}}
+  {{pass}}
+  {{for j in others:}}
+  {{if j.id!=auth.user_id and db.voting( (db.voting.voterid==auth.user_id)& (db.voting.candid==j.id) & (db.voting.tripid==tid) ) is None:}}
+  {{cnt=cnt+1}}
+  <p>Feedback about{{=db.auth_user(db.auth_user.id==j.userid).first_name}}</p>
+  <button class="yes" onclick="yes('{{=db.auth_user(db.auth_user.id==j.userid).first_name}}',{{=j.id}})" id="y{{=cnt}}">YES</button>
+  <button class="no" onclick="no({{=cnt}},{{=j.id}},{{=tid}})" id="n{{=cnt}}">NO</button>
+  {{pass}}
+  {{pass}}
+  </div>
+  <div id="display">
+    <form id="norm" >
+      <h4 id="name"></h4>
+      Comments<br>
+      <textarea name="cmt" cols=40 rows=5></textarea><br>
+      <input type="radio" name="rating" value="5">
+      {{for j in range(0,5): }}
+      <img src={{=URL('static','images',args="star.jpg")}} alt=* height="15em" width="15em">{{pass}}<br>
+      <input type="radio" name="rating" value="4">      {{for j in range(0,4): }}
+      <img src={{=URL('static','images',args="star.jpg")}} alt=* height="15em" width="15em">{{pass}}<br>
+      <input type="radio" name="rating" value="3">      {{for j in range(0,3): }}
+      <img src={{=URL('static','images',args="star.jpg")}} alt=* height="15em" width="15em">{{pass}}<br>
+      <input type="radio" name="rating" value="2">      {{for j in range(0,2): }}
+      <img src={{=URL('static','images',args="star.jpg")}} alt=* height="15em" width="15em">{{pass}}<br>
+      <input type="radio" name="rating" value="1">      {{for j in range(0,1): }}
+      <img src={{=URL('static','images',args="star.jpg")}} alt=* height="15em" width="15em">{{pass}}<br>
+      <input style="visibility: hidden;" id="dummy" name="dummy">
+      <input style="visibility: hidden;" id="tid" value="{{=tid}}" name="tid">
+      <button id="sub" onclick="finish()">RATE</button>
+      </form>
+  </div>
+</div>
+<style>
+           #Home{
+        margin-top:-100px;
+        margin-left:241px;
+      margin-right:120px;
+	   //background: #99ff99;
+	   height: 42.3em;
+	   overflow:scroll;
+	   }
+
+	   #norm{
+	   float: right;
+	   width: 50%;
+	   margin-top: 8em;
+	   visibility: hidden;
+	   }
+	   #yesno{
+	   float: left;
+	   width: 40%;
+	   }
+
+</style>
+
+<script>
+  function yes(x,y)
+  {
+  document.getElementById('norm').style.visibility="visible";
+  document.getElementById('name').innerHTML = x +"'s Feedback";
+  document.getElementById('dummy').value = y;
+  }
+  function no(x,cid,tid)
+  {
+  document.getElementById('dummy').value = cid;
+  ajax('{{=URL('default','form_feed',args=0)}}',['tid','dummy'],'dummy')
+  }
+  function finish()
+  {
+  ajax('{{=URL('default','form_feed',args=1)}}',['tid','cmt','rating','dummy'],'dummy')
+  document.getElementById('norm').style.visibility="hidden";
+  }
+</script>

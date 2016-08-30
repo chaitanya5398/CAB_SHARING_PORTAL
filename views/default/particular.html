@@ -1,0 +1,42 @@
+{{extend 'layout.html'}}
+<div id="page">
+<h2>Trip</h2>
+<table class="table table-hover">
+    <tr><td>From:</td><td>{{=trip.from_place}}</td></tr>
+    <tr><td>To:</td><td>{{=trip.to_place}}</td></tr>
+    <tr><td>Date:</td><td>{{=trip.date_of_trip}}</td></tr>
+    <tr><td>Earliest start time:</td><td>{{=trip.start_up}}</td></tr>
+    <tr><td>Latest start time:</td><td>{{=trip.start_end}}</td></tr>
+    <tr><td>Vacant seats:</td><td>{{=trip.max_people-trip.total_tillnow}}</td></tr>
+</table>
+<h2>Starting user</h2>
+<table class="table table-hover">
+    <tr><td>FullName:</td><td>{{=user.first_name+" "+user.last_name}}</td></tr>
+    <tr><td>Country:</td><td>{{=user.Country}}</td></tr>
+    <tr><td>City:</td><td>{{=user.City}}</td></tr>
+    <tr><td>No. of trips:</td><td>{{=user.trips_no}}</td></tr>
+    <tr><td>Dependability:</td>{{if user.depend_rate!=-1:}}
+    <td>{{=user.depend_rate}}</td>
+    {{else:}}
+    <td>Not rated yet</td>
+    {{pass}}</tr>
+    <tr><td>E-mail:</td><td>{{=user.email}}</td></tr>
+    <tr><td>Phone-no:</td><td>{{=user.phone_no}}</td></tr>
+</table>
+{{if flag==0:}}
+<h2>Send Request:</h2>
+{{=form}}
+{{else:}}
+<h4>Request sent</h4>
+{{pass}}
+</div>
+<style>
+ #table{
+  display: inline-block;
+    }
+        #page{
+        margin-top:-40px;
+        margin-left:270px;
+        margin-right:120px;
+    }
+</style>

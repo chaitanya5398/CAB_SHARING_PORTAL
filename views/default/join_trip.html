@@ -1,0 +1,34 @@
+{{extend 'layout.html'}}
+<div id="table"><table>
+<tr>
+    <th style="text-align:center;width:12em;">Starter</th>
+    <th style="text-align:center;width:12em;">From</th>
+    <th style="text-align:center;width:12em;">To</th>
+    <th style="text-align:center;width:12em;">Date</th>
+    <th style="text-align:center;width:12em;">Earliest time</th>
+    <th style="text-align:center;width:12em;">Latest time</th>
+    <th style="text-align:center;width:12em;">maximum passengers</th>
+</tr>
+{{for i,j in enumerate(Trips):}}
+{{if(i==10):break}}
+<tr>
+    <td style="text-align:center"><a href="{{=URL('particular',args=[j.id])}}">{{=j.starter}}</a></td>
+    <td style="text-align:center">{{=j.from_place}}</td>
+    <td style="text-align:center">{{=j.to_place}}</td>
+    <td style="text-align:center">{{=j.date_of_trip}}</td>
+    <td style="text-align:center">{{=j.start_up}}</td>
+    <td style="text-align:center">{{=j.start_end}}</td>
+    <td style="text-align:center">{{=j.max_people-j.total_tillnow}}</td>
+</tr>
+{{pass}}
+</table>
+{{if(pageno!=0):}}
+<a href="{{=URL(args=[x-1])}}"><button>prev</button></a>
+{{pass}}
+{{if(len(Trips)>10):}}
+<a href="{{=URL(args=[x+1])}}"><button>next</button></a>
+{{pass}}
+</div>
+<a href="{{=URL('form')}}"><button type="button" onclick="searchform()">
+    Search
+    </button></a>

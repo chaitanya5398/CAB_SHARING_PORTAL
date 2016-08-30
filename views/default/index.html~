@@ -1,0 +1,203 @@
+{{extend 'layout.html'}}
+
+<!-- The page essentially contains three major portions,namely trips list with pagination and 2)Notiifcation bar with pagination and the 3)personal messages bar with a scroll option. -->
+<div id="Home" class="hi">
+<h1>{{=uname}}'s Home</h1>
+<!-- The code about the notifications page.-->
+<div id="notif">
+  <a href={{=URL('default','ntf')}}> <h4>Notifications</h4></a>
+  <!-- Clicking on it gives a page full of paginated notifications. -->
+    <table class="" id="ntt">
+    {{cnt=0}}
+    {{for j in nans:}}
+    {{if j.status==1:}}
+    <tr  class="onev">
+      {{pass}}
+      {{if j.status==0:}}
+    <tr  class="oneu">
+      {{pass}}
+      <td  rowspan="2">{{if j.type_of==1:}}<a href={{=URL('default','profile_view',args=ids[cnt])}}>{{=IMG(_src=URL('default','download',args=tt[cnt]),_alt="Pic not Available",_height="40px",_weight="40px")}}</a>{{pass}}
+	{{if j.type_of==2:}}<a href={{=URL('default','profile_view',args=ids[cnt])}}>{{=IMG(_src=URL('default','download',args=tt[cnt]),_alt="Pic Not Available",_height="40px",_weight="40px")}}</a>{{pass}}
+	{{if j.type_of==3:}}<a href={{=URL('default','fill_feedback',args=j.tripid)}}>{{=IMG(_src=URL('static','images',args="feedback.jpg"),_alt="Pic not available",_height="40px",_weight="40px")}}{{pass}}
+      </td>      
+
+      <td> {{if j.type_of==1:}}<a onclick="ajax ('{{=URL('default','nvis',args=j.id)}}')" href="{{=URL('default','particularasadmin',args=j.tripid)}}"> {{=name[cnt]}} has sent you a request to join trip.</a>{{pass}}
+	{{if j.type_of==2:}}<a onclick="ajax ('{{=URL('default','nvis',args=j.id)}}')" href="{{=URL('default','particular',args=j.tripid)}}"> {{=name[cnt]}} has accepted your request to join trip.</a>{{pass}}
+	{{if j.type_of==3:}}<a onclick="ajax('{{=URL('default','nvis',args=j.id)}}')" href="{{=URL('default','fill_feedback',args=j.tripid)}}">Please give your valuable feedback about the trip.</a>{{pass}}
+      </td>
+    </tr>
+    {{if j.status==1:}}
+    <tr class="twov">
+      {{pass}}
+    {{if j.status==0:}}
+    <tr class="twou">
+      {{pass}}
+
+      <td>This notification popped up at {{=j.time_of}} on {{=j.date_of}}.</td>
+    </tr>
+    {{cnt = cnt+1}}
+    {{pass}}
+  </table>
+</div>
+<!-- The code about the notifications page.-->
+
+
+<!-- The code about the trips starts here -->
+<div id="trips">
+<table class="table table-hover table-sm">
+      <thead><tr>
+    <th style="text-align:center;width:10em;">Starter</th>
+    <th style="text-align:center;width:10em;">From</th>
+    <th style="text-align:center;width:10em;">To</th>
+    <th style="text-align:center;width:10em;">Date</th>
+    <th style="text-align:center;width:10em;">Earliest time</th>
+    <th style="text-align:center;width:10em;">Latest time</th>
+    <th style="text-align:center;width:10em;">maximum passengers</th>
+          </tr>
+    </thead>
+    <tbody>
+    {{for i,j in enumerate(Trips):}}
+{{if(i==7):break}}
+<tr>
+    <td style="text-align:center"><a href="{{=URL('particular',args=[j.id])}}">{{=j.starter}}</a></td>
+    <td style="text-align:center">{{=j.from_place}}</td>
+    <td style="text-align:center">{{=j.to_place}}</td>
+    <td style="text-align:center">{{=j.date_of_trip}}</td>
+    <td style="text-align:center">{{=j.start_up}}</td>
+    <td style="text-align:center">{{=j.start_end}}</td>
+    <td style="text-align:center">{{=j.max_people-j.total_tillnow}}</td>
+        </tr>
+    </tbody>
+{{pass}}
+</table>
+{{if(pageno!=0):}}
+<a href="{{=URL(args=[x-1])}}"><button>prev</button></a>
+{{pass}}
+{{if(len(Trips)>7):}}
+<a href="{{=URL(args=[x+1])}}"><button>next</button></a>
+{{pass}}
+</br>
+<button id="button" type="button" onclick="opac2()">Search</button>
+<button id="addtrip" type="button" onclick="opac()">Add Trip</button>
+
+</div>
+
+<!-- The code about the trips page.-->
+
+<!-- The messages code starts here. -->
+
+
+
+<!-- The messages code ends here. -->
+</div>
+<div id="startform" class="form">{{=form}}
+</div>
+<div id="searchform" class="form">{{=form1}}
+</div>
+<style>
+  #button{
+  margin: 5px 0px 0px   50px;
+  }
+  #addtrip{
+  margin: 5px 0px 0px   350px;
+  }
+
+  
+  table{
+  margin-left: 13px;
+  }
+  
+  .onev{
+//  background:  #ff8080;
+  //   background: white;
+  border-top: solid white;
+  }
+  .oneu{
+  background:  #b3ccff; 
+  border-top: solid white;
+  }
+  .twov{
+//  background:  #ff8080;
+  //background: white;
+    border-bottom: solid white;
+  }
+  .twou{
+  //   background: #ff8080;
+  background:  #b3ccff;
+  opacity: 0.7
+  border-bottom: solid white;
+  }
+      #trips{
+  width: 65%;
+      }
+
+/*      #bg{
+      margin-top:-100px;
+        margin-left:241px;
+      margin-right:120px;
+      margin-bottom: -100px;
+      background: #99ff99;
+      }*/
+
+  #notif{
+  display: inline-block;
+  width: 32%;
+  overflow: scroll;
+  float: right;
+  height: 41em;
+  margin-top: -2.5em;
+  border-left: solid black ;
+  border-right: solid black ;
+  }
+
+    #startform{
+        visibility:hidden;
+        height:30em;
+        overflow: scroll;
+        position:fixed;
+        left:28em;
+        top:7em;
+        width: 40em;
+  }
+  #searchform
+  {
+        visibility:hidden;
+        height:30em;
+        position:fixed;
+        left:27em;
+        top:7em;
+        width: 30em;
+  }
+      /*    #Home{
+        margin-top:-40px;
+        margin-left:270px;
+        margin-right:120px;
+      }*/
+           #Home{
+        margin-top:-100px;
+        margin-left:241px;
+      margin-right:120px;
+      margin-bottom: -100px;
+     // background:  #cce6ff;
+      height: 43em;
+  }
+  a{
+  color: black;
+  }
+  a:hover{
+  color:green ;
+  }
+</style>
+
+<script>
+    function opac()
+    {
+        document.getElementById('Home').style.opacity=0.2;
+        document.getElementById('startform').style.visibility="visible";
+    }
+    function opac2()
+    {
+        document.getElementById('Home').style.opacity=0.2;
+        document.getElementById('searchform').style.visibility="visible";
+    }
+</script>

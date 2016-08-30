@@ -1,0 +1,122 @@
+{{extend 'layout.html'}}
+<h1 style="text-align:center">Pending Trips</h1>
+<h3> As starter </h3>
+<table>
+<tr>
+    <th style="text-align:center;width:10em;">From</th>
+    <th style="text-align:center;width:10em;">To</th>
+    <th style="text-align:center;width:10em;">Date</th>
+    <th style="text-align:center;width:10em;">Earliest time</th>
+    <th style="text-align:center;width:10em;">Latest time</th>
+    <th style="text-align:center;width:10em;">maximum passengers</th>
+</tr>
+{{for i,j in enumerate(PendTripsasadmin):}}
+{{if(i==10):break}}
+<tr>
+    <td style="text-align:center"><a href="{{=URL('particularasadmin',args=[j.id])}}">{{=j.from_place}}</a></td>
+    <td style="text-align:center">{{=j.to_place}}</td>
+    <td style="text-align:center">{{=j.date_of_trip}}</td>
+    <td style="text-align:center">{{=j.start_up}}</td>
+    <td style="text-align:center">{{=j.start_end}}</td>
+    <td style="text-align:center">{{=j.max_people-j.total_tillnow}}</td>
+</tr>
+{{pass}}
+</table>
+{{if(pageno1!=0):}}
+<a href="{{=URL(args=[x-1])}}"><button>prev</button></a>
+{{pass}}
+{{if(len(PendTripsasadmin)>10):}}
+<a href="{{=URL(args=[x+1])}}"><button>next</button></a>
+{{pass}}
+</br></br>
+<h3>As passenger</h3>
+<table>
+<tr>
+    <th style="text-align:center;width:10em;">Starter</th>
+    <th style="text-align:center;width:10em;">From</th>
+    <th style="text-align:center;width:10em;">To</th>
+    <th style="text-align:center;width:10em;">Date</th>
+    <th style="text-align:center;width:10em;">Earliest time</th>
+    <th style="text-align:center;width:10em;">Latest time</th>
+    <th style="text-align:center;width:10em;">maximum passengers</th>
+</tr>
+{{for i,j in enumerate(PendTrips):}}
+{{if(i==10):break}}
+<tr>
+    <td style="text-align:center">{{=j.starter}}</td>
+    <td style="text-align:center">{{=j.from_place}}</td>
+    <td style="text-align:center">{{=j.to_place}}</td>
+    <td style="text-align:center">{{=j.date_of_trip}}</td>
+    <td style="text-align:center">{{=j.start_up}}</td>
+    <td style="text-align:center">{{=j.start_end}}</td>
+    <td style="text-align:center">{{=j.max_people-int(j.total_tillnow)}}</td>
+</tr>
+{{pass}}
+</table>
+{{if(pageno2!=0):}}
+<a href="{{=URL(args=[x-1])}}"><button>prev</button></a>
+{{pass}}
+{{if(len(PendTrips)>10):}}
+<a href="{{=URL(args=[x+1])}}"><button>next</button></a>
+{{pass}}
+</br></br></br>
+<h1 style="text-align:center">Previous Trips</h1>
+<h3>As admin</h3>
+<table>
+<tr>
+    <th style="text-align:center;width:10em;">From</th>
+    <th style="text-align:center;width:10em;">To</th>
+    <th style="text-align:center;width:10em;">Date</th>
+    <th style="text-align:center;width:10em;">Earliest time</th>
+    <th style="text-align:center;width:10em;">Latest time</th>
+    <th style="text-align:center;width:10em;">maximum passengers</th>
+</tr>
+{{for i,j in enumerate(PrevTripsasadmin):}}
+{{if(i==10):break}}
+<tr>
+    <td style="text-align:center">{{=j.from_place}}</td>
+    <td style="text-align:center">{{=j.to_place}}</td>
+    <td style="text-align:center">{{=j.date_of_trip}}</td>
+    <td style="text-align:center">{{=j.start_up}}</td>
+    <td style="text-align:center">{{=j.start_end}}</td>
+    <td style="text-align:center">{{=j.max_people-int(j.total_tillnow)}}</td>
+</tr>
+{{pass}}
+</table>
+{{if(pageno3!=0):}}
+<a href="{{=URL(args=[x-1])}}"><button>prev</button></a>
+{{pass}}
+{{if(len(PrevTripsasadmin)>10):}}
+<a href="{{=URL(args=[x+1])}}"><button>next</button></a>
+{{pass}}
+</br></br>
+<h3>As Passenger</h3>
+<table>
+<tr>
+    <th style="text-align:center;width:10em;">Starter</th>
+    <th style="text-align:center;width:10em;">From</th>
+    <th style="text-align:center;width:10em;">To</th>
+    <th style="text-align:center;width:10em;">Date</th>
+    <th style="text-align:center;width:10em;">Earliest time</th>
+    <th style="text-align:center;width:10em;">Latest time</th>
+    <th style="text-align:center;width:10em;">maximum passengers</th>
+</tr>
+{{for i,j in enumerate(PrevTrips):}}
+{{if(i==10):break}}
+<tr>
+    <td style="text-align:center">{{=j.starter}}</td>
+    <td style="text-align:center">{{=j.from_place}}</td>
+    <td style="text-align:center">{{=j.to_place}}</td>
+    <td style="text-align:center">{{=j.date_of_trip}}</td>
+    <td style="text-align:center">{{=j.start_up}}</td>
+    <td style="text-align:center">{{=j.start_end}}</td>
+    <td style="text-align:center">{{=j.max_people-int(j.total_tillnow)}}</td>
+</tr>
+{{pass}}
+</table>
+{{if(pageno4!=0):}}
+<a href="{{=URL(args=[x-1])}}"><button>prev</button></a>
+{{pass}}
+{{if(len(PrevTrips)>10):}}
+<a href="{{=URL(args=[x+1])}}"><button>next</button></a>
+{{pass}}</br></br></br>

@@ -1,0 +1,57 @@
+{{extend 'layout.html'}}
+<div id="page">
+<div class="passengers">
+{{if curr!=trip.strid:}}
+    <h3>Starter</h3>
+    <table class="table table-hover">
+        <tr>
+    <td style="text-align:center"><a href="{{=URL('profile_view',args=[starter.id])}}" alt="image unavailable">{{=IMG(_src=URL('default','download',args=starter.Pp),_alt="Pic not Available",_height="40px",_weight="40px")}}</a></td>
+    <td style="text-align:center;width:10em;">{{=starter.first_name+" "+starter.last_name}}</td>
+        </tr>
+    </table>
+{{pass}}
+    <h3>Passenges</h3>
+    <table class="table table-hover">
+        {{for i,j in enumerate(passengers):}}
+        <tr>
+    <td style="text-align:center"><a href="{{=URL('profile_view',args=[j.id])}}" alt="image unavailable">{{=IMG(_src=URL('default','download',args=j.Pp),_alt="Pic not Available",_height="40px",_weight="40px")}}</a></td>
+    <td style="text-align:center;width:10em;">{{=j.first_name+" "+j.last_name}}</td>
+        </tr>
+        {{pass}}
+    </table>
+</div>
+<table class="table table-hover">
+    <thead>
+        <tr>
+    <th style="text-align:center;width:20em;">Comments</th>
+    <th style="text-align:center;width:10em;">comment by</th>
+    <th style="text-align:center;width:5em;">time</th>
+    <th style="text-align:center;width:5em;">date</th>
+        </tr></thead>
+    <tbody>
+    {{for i,j in enumerate(comments):}}
+    <tr>
+            <td style="text-align:center;width:20em;">{{=j.comm}}</td>
+            <td style="text-align:center;width:10em;">{{=j.cmby}}</td>
+            <td style="text-align:center;width:5em;">{{=j.time_cm}}</td>
+            <td style="text-align:center;width:5em;">{{=j.date_cm}}</td>
+    </tr>
+    {{pass}}
+    </tbody>
+</table>
+</div>
+<style>
+    .passengers{
+        display:inline-block;
+        float:right;
+        width:25%;
+    }
+    .table{
+        width: 65%;
+    }
+    #page{
+        margin-top:-40px;
+        margin-left:270px;
+        margin-right:120px;
+    }
+</style>
